@@ -17,8 +17,15 @@ export default class Go extends Trait {
         const absX = Math.abs(entity.vel.x);
         if (this.dir !== 0) {
             entity.vel.x += this.acceleration * deltaTime * this.dir;
-            this.heading = this.dir;
-            this.distance += absX * deltaTime;
+
+            if (entity.jump) {
+                if (entity.jump.falling === false) {
+                    this.heading = this.dir;
+                }
+            } else {
+                this.heading = this.dir;
+            }
+
         } else if (entity.vel.x !== 0) {
             const decel = Math.abs(absX, this.acceleration * deltaTime);
             entity.vel.x += entity.vel.x > 0 ? -decel : decel;
